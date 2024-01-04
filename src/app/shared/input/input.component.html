@@ -1,21 +1,28 @@
 <div class="field">
   <label for="">{{label}}</label>
-  <input [formControl]="control" />
-  <div class="ui error message" *ngIf="showErrors()">
-    ooooo
+  <input 
+    [formControl]="control"
+    [type]="inputType"
+    />
+  <div *ngIf="showErrors()" class="ui pointing red basic label">
+    <!-- {{ control.errors | json }} for degugging -->
     <div *ngIf="control.errors?.['required']">
       {{label}} is required
     </div>
     <div *ngIf="control.errors?.['minlength']">
-      {{label}} must be at least {{control.errors?.['minlength'].requiredLength}} characters
+      {{label}} entered length is {{control.errors?.['minlength'].actualLength}}. It must be at least {{control.errors?.['minlength'].requiredLength}} characters.
     </div>
     <div *ngIf="control.errors?.['maxlength']">
-      {{label}} must be no more than {{control.errors?.['maxlength'].requiredLength}} characters
+      {{label}} entered length is {{control.errors?.['maxlength'].actualLength}}. It must be no more than {{control.errors?.['maxlength'].requiredLength}} characters
     </div>
-    <div *ngIf="control.errors?.['email']">
-      {{label}} must be a valid email address
+    <div *ngIf="control.errors?.['pattern']">
+      {{label}} must be include only letters and numbers.
     </div>
-    <div *ngIf="control.errors?.['matching']">
-      {{label}} must match {{control.errors?.['matching'].matchingControlName}}
+    <div *ngIf="control.errors?.['noConnection']">
+      Can't tell if the user name is taken. Check your internet connection.
     </div>
-</div>
+    <div *ngIf="control.errors?.['nonUniqueUsername']">
+      {{label}} must be unique, "{{control.value}}" is taken!
+    </div>
+  </div>
+
