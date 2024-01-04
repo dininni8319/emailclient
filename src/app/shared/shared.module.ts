@@ -2,15 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from './input/input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
-    InputComponent
+    InputComponent,
+    NavigationComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule
   ],
-  exports: [InputComponent]
+  exports: [
+    InputComponent,
+    NavigationComponent
+  ]
 })
 export class SharedModule { }
