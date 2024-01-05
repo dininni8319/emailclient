@@ -34,7 +34,8 @@ export interface SignIn {
 export class AuthService {
   rootUrl = 'https://api.angular-email.com';
   // the dollars sign tells us that this is an Observable
-  signedIn$ = new BehaviorSubject(false)
+  // signedIn$ = new BehaviorSubject(false)
+  signedIn$ = new BehaviorSubject<null | boolean>(null) // we dont know if the user is signed in or not
   constructor(private http: HttpClient) { }
   
   usernameAvailable(username: string) {

@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
     path: 'inbox',
+    canMatch: [authGuard],
     //importing inbox.module with lazing loading
     loadChildren: () => import('./inbox/inbox.module').then(mod => mod.InboxModule)
+  },
+  {
+    path: 'inbox',
+    redirectTo: '/'
   }
 ];
 

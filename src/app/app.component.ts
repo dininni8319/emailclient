@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   // signedIn = false
 
   // second approach
-  signedin$!: BehaviorSubject<boolean>
+  signedin$!: BehaviorSubject<boolean | null>
 
   constructor(
     private authService: AuthService
