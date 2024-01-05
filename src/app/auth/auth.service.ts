@@ -22,6 +22,11 @@ interface SignedinResponse {
   username: string
 }
 
+export interface SignIn {
+  username: string,
+  password: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,9 +38,12 @@ export class AuthService {
   constructor(private http: HttpClient) { }
   
   usernameAvailable(username: string) {
-    return this.http.post<UsernameAvailableResponse>(`${this.rootUrl}/auth/username`, {
-      username
-    })
+    return this.http.post<UsernameAvailableResponse>(
+      `${this.rootUrl}/auth/username`, 
+      {
+        username
+      }
+    )
   }
 
   signup(credentials: SignupCredential) {
@@ -71,5 +79,16 @@ export class AuthService {
           this.signedIn$.next(false);
         })
       )
+  }
+
+  signin(credentials: SignIn) {
+    return this.http.post(
+      `${this.rootUrl}/auth/signin`, 
+      credentials
+    ).pipe(
+      tap(() => {
+        this.signedIn$.next(true)
+      })
+    )
   }
 }
