@@ -17,6 +17,11 @@ interface SignupResponse {
   username: string;
 }
 
+interface SignedinResponse {
+  authenticated: boolean,
+  username: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,8 +44,32 @@ export class AuthService {
       credentials
     ).pipe(
       tap(() => {
-        this.signedIn$.next(true)
+        this.signedIn$.next(true);
       })
     )
+  }
+  
+  checkAuth() {
+    return this.http.get<SignedinResponse>(
+      `${this.rootUrl}/auth/signedin`)
+      .pipe(
+        tap(({ authenticated }) => {
+          this.signedIn$.next(authenticated);
+        })
+      )
+  }
+
+  signout() {
+    // we are not posting any data
+    // api server is going to back, we will signout from the application
+    // clearing out all the stored cookie in the header
+    return this.http.post(
+      `${this.rootUrl}/auth/signout`, {}
+    )
+      .pipe(
+        tap(() => {
+          this.signedIn$.next(false);
+        })
+      )
   }
 }

@@ -2,7 +2,8 @@
   <div class="ui secondary pointing menu">
     <a routerLink="/" class="item">Angular Email</a>
     <div class="right menu">
-      <ng-container *ngIf="signedIn">
+      <!-- async pipe if going to receive the value from the signedin$ and update the template  -->
+      <ng-container *ngIf="signedin$ | async">
         <a 
           routerLink="/inbox" 
           class="ui item" 
@@ -18,12 +19,14 @@
           Sign Out
         </a>
       </ng-container>
-      <ng-container *ngIf="!signedIn">
-
+      <!-- we first get the value from the signedin$ and then flip it -->
+      <ng-container *ngIf="!(signedin$ | async)">
         <a 
           routerLink="/" 
           class="ui item" 
-          routerLinkActive="active">
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true}"
+        >
           Sign in
         </a>
         <a 
