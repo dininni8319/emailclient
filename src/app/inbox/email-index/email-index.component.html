@@ -1,1 +1,16 @@
-<p>email-index works!</p>
+<div class="ui celled list">
+  <div class="item" *ngFor="let email of emails">
+    <!-- link that is relative to the current path,
+      and stick on the email id at the very end -->
+    <a [routerLink]="email.id" routerLinkActive="active">
+      <div class="content">
+        <div class="header">
+          {{ email.subject }}
+        </div>
+        <p>
+          {{ email.from }}
+        </p>
+      </div>
+    </a>
+  </div>
+</div>

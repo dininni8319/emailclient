@@ -1,0 +1,16 @@
+.item a {
+  color: black
+}
+
+a.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* :before is a sudo element used to add content into our html element */
+a.active:before {
+  content: '>';
+  font-size: 20px;
+  margin-right: 10px;
+}
