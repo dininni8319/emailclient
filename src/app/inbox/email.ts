@@ -4,4 +4,5 @@ export interface Email {
   text: string;
   to: string;
   from: string;
+  html: string
 }
