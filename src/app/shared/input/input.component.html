@@ -1,9 +1,15 @@
 <div class="field">
   <label for="">{{label}}</label>
-  <input 
+  <input
+    *ngIf="controlType === 'input'"
     [formControl]="control"
     [type]="inputType"
     />
+
+    <textarea *ngIf="controlType === 'textarea'"
+      [formControl]="control"
+    >
+    </textarea>
   <div *ngIf="showErrors()" class="ui pointing red basic label">
     <!-- {{ control.errors | json }} for degugging -->
     <div *ngIf="control.errors?.['required']">
@@ -24,5 +30,8 @@
     <div *ngIf="control.errors?.['nonUniqueUsername']">
       {{label}} must be unique, "{{control.value}}" is taken!
     </div>
+    <p *ngIf="control.errors?.['email']">
+      Enter a valid email
+    </p>
   </div>
 
