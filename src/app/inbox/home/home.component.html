@@ -1,10 +1,20 @@
-  <div class="ui grid stackable container">
-    <div class="five wide column">
-      <app-email-index></app-email-index>
-    </div>
-    <div class="eleven wide column" id="main-column">
-      <!-- show child component -->
-      <router-outlet></router-outlet>
-    </div>
+<div class="ui grid stackable container">
+  <div class="five wide column">
+    <app-email-create></app-email-create>
+    <app-email-index></app-email-index>
   </div>
+  <div class="eleven wide column" id="main-column">
+    <!-- show child component -->
+    <router-outlet></router-outlet>
+  </div>
+</div>
 
+<!-- <app-modal>
+  <h3 modelTitle>Compose</h3>
+  <p>
+    Im some content
+  </p>
+  <div modelFooter>
+    <button class="ui primary button">Custom button</button>
+  </div>
+</app-modal> -->
