@@ -1,7 +1,9 @@
 import { 
   Component,
   Input,
-  OnInit
+  OnInit,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { 
   FormGroup, 
@@ -18,7 +20,8 @@ import { Email } from '../email';
 
 export class EmailFormComponent implements OnInit {
   @Input() email!: Email;
-  
+  @Output() emailSubmit = new EventEmitter()
+
   emailForm!: FormGroup
 
   constructor() {}
@@ -31,6 +34,7 @@ export class EmailFormComponent implements OnInit {
         Validators.required, 
         Validators.email
       ]),
+      // from in this case is droped when disabled
       from: new FormControl({ value: from, disabled: true }),
       subject: new FormControl(subject, [
         Validators.required
@@ -39,5 +43,14 @@ export class EmailFormComponent implements OnInit {
         Validators.required
       ]),
     })
+  }
+
+  onSubmit() {
+    if (this.emailForm.invalid) {
+      return;
+    }
+    
+    this.emailSubmit.emit(this.emailForm.value);
+    // console.log(this.emailForm.getRawValue()); // gets also the disable
   }
 }

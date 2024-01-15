@@ -22,6 +22,10 @@ interface SignedinResponse {
   username: string
 }
 
+interface SigninResponse {
+  username: string;
+}
+
 export interface SignIn {
   username: string,
   password: string
@@ -36,6 +40,8 @@ export class AuthService {
   // the dollars sign tells us that this is an Observable
   // signedIn$ = new BehaviorSubject(false)
   signedIn$ = new BehaviorSubject<null | boolean>(null) // we dont know if the user is signed in or not
+  username = '';
+
   constructor(private http: HttpClient) { }
   
   usernameAvailable(username: string) {
@@ -52,8 +58,9 @@ export class AuthService {
       `${this.rootUrl}/auth/signup`, 
       credentials
     ).pipe(
-      tap(() => {
+      tap(({ username }) => {
         this.signedIn$.next(true);
+        this.username = username;
       })
     )
   }
@@ -62,8 +69,9 @@ export class AuthService {
     return this.http.get<SignedinResponse>(
       `${this.rootUrl}/auth/signedin`)
       .pipe(
-        tap(({ authenticated }) => {
+        tap(({ authenticated, username }) => {
           this.signedIn$.next(authenticated);
+          this.username = username;
         })
       )
   }
@@ -75,20 +83,21 @@ export class AuthService {
     return this.http.post(
       `${this.rootUrl}/auth/signout`, {}
     )
-      .pipe(
-        tap(() => {
-          this.signedIn$.next(false);
-        })
-      )
+    .pipe(
+      tap(() => {
+        this.signedIn$.next(false);
+      })
+    )
   }
 
   signin(credentials: SignIn) {
-    return this.http.post(
+    return this.http.post<SignedinResponse>(
       `${this.rootUrl}/auth/signin`, 
       credentials
     ).pipe(
-      tap(() => {
-        this.signedIn$.next(true)
+      tap(({ username }) => {
+        this.signedIn$.next(true);
+        this.username = username;
       })
     )
   }

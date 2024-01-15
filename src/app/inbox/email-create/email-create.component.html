@@ -7,7 +7,7 @@
   (dismiss)="showModal = false"
 >
   <div modalTitle>Compose</div>
-  <app-email-form [email]="email">
+  <app-email-form [email]="email" (emailSubmit)="onSubmit($event)">
 
   </app-email-form>
 </app-modal>

@@ -1,6 +1,7 @@
 <form
   [formGroup]="emailForm"
   class="ui form"
+  (ngSubmit)="onSubmit()"
 >
   <app-input
    label="To"
